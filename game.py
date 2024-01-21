@@ -1,7 +1,8 @@
+import turtle
 from random import randint
 
-from geometry import Rectangle
-from points import Point
+from geometry import Rectangle, GuiRectangle
+from points import Point, GuiPoint
 
 
 class Game:
@@ -28,7 +29,17 @@ class Game:
         """
         Creates a random rectangle and prints a message.
         """
-        random_rectangle = Rectangle(Point(randint(0, 9), randint(0, 9)), Point(randint(10, 19), randint(10, 19)))
+        random_rectangle = Rectangle(Point(randint(0, 400), randint(0, 400)), Point(randint(10, 400), randint(10, 400)))
+        print("Random rectangle created!")
+        return random_rectangle
+
+    @staticmethod
+    def create_random_gui_rectangle():
+        """
+        Creates a random rectangle and prints a message.
+        """
+        random_rectangle = GuiRectangle(Point(randint(0, 400), randint(0, 400)),
+                                        Point(randint(10, 400), randint(10, 400)))
         print("Random rectangle created!")
         return random_rectangle
 
@@ -59,3 +70,27 @@ class Game:
 
         # Check if the user's guess is correct.
         self.guess_rectangle_area(user_rectangle_area, random_rectangle_2.calculate_rectangle_area())
+
+    def game_gui_guess(self):
+        """
+        Executes Game 3 -
+        User guesses the area of a random rectangle and point coordinates to fit into the rectangle area.
+        A Graphical representation of the rectangle and point is drawn using the turtle module.
+        """
+        # Create a random rectangle using the GuiRectangle class.
+        gui_random_rectangle = GuiRectangle(Point(randint(0, 400), randint(0, 400)),
+                                            Point(randint(10, 400), randint(10, 400)))
+
+        self.game_guess_point()
+        user_rectangle_area = input("Guess rectangle area: ")
+        self.guess_rectangle_area(user_rectangle_area, gui_random_rectangle.calculate_rectangle_area())
+
+        # Input user point coordinates.
+        print("Input point coordinates. Try to fit your point inside the rectangle.")
+        user_point = GuiPoint(float(input("Guess X: ")), float(input("Guess Y: ")))
+
+        # Draw the rectangle and user point using the turtle module.
+        my_turtle = turtle.Turtle()
+        user_point.draw(canvas=my_turtle)
+        gui_random_rectangle.draw(canvas=my_turtle)
+        turtle.done()

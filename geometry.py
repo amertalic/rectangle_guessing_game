@@ -1,3 +1,6 @@
+import turtle
+
+
 class Rectangle:
     """
     A rectangle object in a coordinate system can be defined by two points: upright and lower left.
@@ -34,3 +37,25 @@ class Rectangle:
         rectangle_area = (self.point2.x - self.point1.x) * (self.point2.y - self.point1.y)
         print(f"Rectangle are is: {rectangle_area}")
         return rectangle_area
+
+
+class GuiRectangle(Rectangle):
+    """
+    Additional from Rectangle uses turtle to show graphics.
+    """
+    angle = 90
+
+    def draw(self, canvas: turtle.Turtle):
+        canvas.penup()
+        canvas.goto(self.point1.x, self.point1.y)
+        canvas.pendown()
+
+        for _ in range(2):
+            self.draw_line(canvas, self.point2.x - self.point1.x)
+            canvas.left(GuiRectangle.angle)
+            self.draw_line(canvas, self.point2.y - self.point1.y)
+            canvas.left(GuiRectangle.angle)
+
+    @staticmethod
+    def draw_line(canvas: turtle.Turtle, length: float):
+        canvas.forward(length)

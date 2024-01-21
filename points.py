@@ -1,6 +1,7 @@
+import turtle
 from math import sqrt
 
-from geometry import Rectangle
+from geometry import Rectangle, GuiRectangle
 
 
 class Point:
@@ -9,7 +10,7 @@ class Point:
         self.x = x
         self.y = y
 
-    def falls_in_rectangle(self, rectangle: 'Rectangle') -> bool:
+    def falls_in_rectangle(self, rectangle: ['Rectangle', 'GuiRectangle']) -> bool:
         """
         Checks if coordinates are in rectangle.
         """
@@ -22,3 +23,15 @@ class Point:
         Calculate distance between x and y.
         """
         return sqrt((self.x - point.x) ** 2 + (self.y - point.y) ** 2)
+
+
+class GuiPoint(Point):
+    """
+    Additional from Point uses turtle to show graphics.
+    """
+
+    def draw(self, canvas: turtle.Turtle, size: int = 5, color: str = "red"):
+        canvas.penup()
+        canvas.goto(self.x, self.y)
+        canvas.pendown()
+        canvas.dot(size, color)
